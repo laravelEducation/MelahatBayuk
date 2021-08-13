@@ -5,7 +5,7 @@
     <h1 class="page-header">Ürün Yönetimi</h1>
 
 
-    <form method="post" action="{{route('yonetim.urun.kaydet',(is_null($entry->id) ? "0" : $entry->id))}}">
+    <form method="post" action="{{route('yonetim.urun.kaydet',(is_null($entry->id) ? "0" : $entry->id))}}" enctype="multipart/form-data">
         {{csrf_field()}}
 
         <div class="pull-right">
@@ -37,7 +37,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="aciklama">Ürün Adı </label>
+                    <label for="aciklama">Açıklama</label>
                     <textarea class="form-control" id="aciklama" placeholder="Açıklama " name="aciklama" >{{old('aciklama',$entry->aciklama)}}</textarea>
                 </div>
             </div>
@@ -72,7 +72,57 @@
                 <input type="checkbox" name="goster_indirimli" value="1" {{old('goster_indirimli',$entry->detay->goster_indirimli )? 'checked': ''}}> İndirimli Ürünlerde Göster
             </label>
         </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="kategoriler">Kategoriler</label>
+                    <select name="kategoriler[]" class="form-control" id="kategoriler" multiple>
+                  @foreach($kategoriler as $kategori)
+                  <option value="{{$kategori->id}}" {{collect(old('kategoriler',$urun_kategorileri))->contains($kategori->id) ? 'selected' : ''}}>{{$kategori->kategori_adi}}</option>
+                    {{--------contains ile kategorinin id si olup olmadığını kontrol ediyoruz------}}
+                    {{--------collect ile parantez içerisinde verdiğimiz diziyi laravel kolleksiyonlarına dönüştürmeyi sağlıyor--------}}
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+        </div>
+          @if($entry->detay->urun_resmi != null)
+          <img src="/uploads/urunler/{{$entry->detay->urun_resmi}}" style="height: 100px; margin-right: 20px;" class="thumbnail pull-left">
+        @endif
+        <div class="form-group">
+            <label for="urun_resmi">Ürün Resmi</label>
+            <input type="file" id="urun_resmi" name="urun_resmi">
+        </div>
+
+
     </form>
 
+@endsection
 
+@section('head')
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+@endsection
+@section('footer')
+    <script src="//cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+      $(function (){
+          $('#kategoriler').select2({
+              placeholder:'Lütfen Kategori Seçiniz'
+
+          });
+
+          var options={
+              uiColor: '#010b4c',
+              language:'tr',
+              filebrowserImageBrowseUrl: '/laravel-filemanager?type=Images',
+              filebrowserImageUploadUrl: '/laravel-filemanager/upload?type=Images&_token=',
+              filebrowserBrowseUrl: '/laravel-filemanager?type=Files',
+              filebrowserUploadUrl: '/laravel-filemanager/upload?type=Files&_token=',
+          }
+          CKEDITOR.replace('aciklama',options);
+
+      });
+
+    </script>
 @endsection
