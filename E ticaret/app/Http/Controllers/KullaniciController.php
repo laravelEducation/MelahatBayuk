@@ -17,7 +17,7 @@ class KullaniciController extends Controller
 
     public function __construct()
     {
-        $this->middleware('guest')->except('oturumukapat');
+      //  $this->middleware('guest')->except('oturumukapat');
     }
 
     public function giris_form()
@@ -33,9 +33,20 @@ class KullaniciController extends Controller
             'sifre' => 'required',
 
         ]);
-        if (auth()->attempt(['email' => request('email'), 'password' => request('sifre')], request()->has('benihatirla'))) {
+        $credentials=[
+            'email'=>request('email'),
+            'password'=>request('sifre'),
+            'aktif_mi'=>1
+        ];
+        if (auth()->attempt($credentials,request()->has('benihatirla'))) {
             request()->session()->regenerate();
-            $aktif_sepet_id = Sepet::firstOrCreate(['kullanici_id' => auth()->id()])->id;
+            $aktif_sepet_id = Sepet::aktif_sepet_id();
+            if (!is_null($aktif_sepet_id)){
+               $aktif_sepet=Sepet::create(['kullanici_id'=>auth()->id()]);
+               $aktif_sepet_id=$aktif_sepet->id;
+
+            }
+
             session()->put('aktif_sepet_id', $aktif_sepet_id);
 
             if (Cart::count() > 0) {
@@ -50,7 +61,7 @@ class KullaniciController extends Controller
             Cart::destroy();
             $sepetUrunler = SepetUrun::where('sepet_id', $aktif_sepet_id)->get();
             foreach ($sepetUrunler as $sepetUrun) {
-                Cart::add($sepetUrun->urun->id, $sepetUrun->urun->urun_adi, $sepetUrun->adet, $sepetUrun->fiyati);
+                Cart::add($sepetUrun->urun->id, $sepetUrun->urun->urun_adi, $sepetUrun->adet, $sepetUrun->fiyati,0,['slug'=>$sepetUrun->urun->slug]);
 
             }
 
@@ -101,7 +112,7 @@ class KullaniciController extends Controller
     public function aktiflestir($anahtar)
     {
         $kullanici = Kullanici::where('aktivasyon_anahtari', $anahtar)->first();
-        if (is_null($kullanici)) {
+        if (!is_null($kullanici)) {
             $kullanici->aktivasyon_anahtari = null;
             $kullanici->aktif_mi = 1;
             $kullanici->save();

@@ -10,10 +10,14 @@ class Siparis extends Model
 {
     use SoftDeletes;
     protected $table='siparis';
-    protected $fillable=['sepet_id','siparis_tutari',
-        'banka','taksit_sayisi','durum',
-        'adsoyad','adres','telefon','ceptelefonu','banka'];
+
+    protected $fillable=[
+        'sepet_id','siparis_tutari',
+        'adsoyad','adres','telefon','ceptelefonu', 'banka','taksit_sayisi','durum'];
+
+
     const  DELETED_AT='silinme_tarihi';
+
 
     public function sepet(){
         return $this->belongsTo('App\Models\Sepet');

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class UrunDetay extends Model
 {
     protected $table='urun_detay';
+    protected $guarded = []; //tüm kolonlar eklenebilir
 
     public $timestamps=false;
 

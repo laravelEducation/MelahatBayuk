@@ -11,7 +11,7 @@ class Kullanici extends Authenticatable
     use  SoftDeletes;
     protected $table='kullanici';
 
-    protected $fillable = ['adsoyad', 'email', 'sifre','aktivasyon_anahtari','aktif_mi',];
+    protected $fillable = ['adsoyad', 'email', 'sifre','aktivasyon_anahtari','aktif_mi','yonetici_mi'];
     protected $hidden = ['sifre', 'aktivasyon_anahtari',];
 
     const DELETED_AT='silinme_tarihi';
@@ -21,7 +21,7 @@ class Kullanici extends Authenticatable
         return $this->sifre;
     }
     public function detay(){
-        return $this->hasOne('App\Models\KullaniciDetay');
+        return $this->hasOne('App\Models\KullaniciDetay')->withDefault();
 
 
     }

@@ -16,7 +16,7 @@
                @foreach($urunler as $urun)
        <div class="col-md-3 product">
            <a href="{{route('urun',$urun->slug)}}">
-           <img src="http://via.placeholder.com/400*400?text=UrunResmi" alt="{{$urun->urun_adi}}">
+           <img src="http://lorempixel.com/485/400/food/7" alt="{{$urun->urun_adi}}">
            </a>
            <p><a href="{{route('urun',$urun->slug)}}">{{$urun->urun_adi}} </a> </p>
          <p class="price">{{$urun->fiyati}} ₺</p>

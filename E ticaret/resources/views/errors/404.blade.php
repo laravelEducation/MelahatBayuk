@@ -1,5 +1,4 @@
-@extends('layouts.master')
-@section('content')
+  @section('content')
     <div class="container">
     <div class="jumbotron text-center">
         <h1>404</h1>

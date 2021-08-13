@@ -12,7 +12,7 @@ class Urun extends Model
 
     protected $table = 'urun';
 
-    protected $guarded = [];
+    protected $guarded = []; //tüm kolonlar eklenebilir
     const DELETED_AT = 'silinme_tarihi';
 
     public function kategoriler(){
@@ -20,7 +20,7 @@ class Urun extends Model
     }
 
     public function detay(){
-        return $this->hasOne('App\Models\UrunDetay');
+        return $this->hasOne('App\Models\UrunDetay')->withDefault(); //ürünün detayına erişilemediği durum da with default kullanıyourz
 
     }
 

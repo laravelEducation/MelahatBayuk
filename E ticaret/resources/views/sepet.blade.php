@@ -18,19 +18,18 @@
                     <td style="width: 120px;">
                         <a href="" >
 
-                        <img src="http://via.placeholder.com/120*100?text=UrunResmi">
+                        <img src="http://lorempixel.com/120/100/food/3">
                         </a>
                     </td>
                     <td>
-                      <a href="" >
-                          {{$urunCartItem->name}}
+                        <a href="" >
+                        {{$urunCartItem->name}}
                       </a>
                          <form action="{{route('sepet.kaldir',$urunCartItem->rowId)}}" method="post">
                        {{csrf_field()}}
                         {{method_field('DELETE')}}
                              <input type="submit" class="btn btn-danger btn-xs" value="Sepetten Kaldır">
                          </form>
-
                     </td>
                     <td>{{$urunCartItem->price}}</td>
                     <td>
@@ -76,6 +75,7 @@
 @section('footer')
     <script>
         $(function (){
+
             $('.urun-adet-artir,.urun-adet-azalt').on('click',function (){
 
                 var id=$(this).attr('data-id');
@@ -84,7 +84,8 @@
 
                     type:'PATCH',
                     url:'{{url('sepet/guncelle')}}/' + id,
-                    data:{adet:adet},
+                    data:{adet:adet,
+                    },
                     success:function (result){
                         window.location.href='/sepet';
                     }
