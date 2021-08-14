@@ -54,7 +54,7 @@ class UrunController extends Controller
             'slug'=>(request('original_slug')!=request('slug') ? 'unique:kategori,slug' : '')
         ]);
 
-          $data_detay=request()->only('goster_slider','goster_gunun_firsati','goster_one_cikan','goster_indirimli');
+          $data_detay=request()->only('goster_slider','goster_gunun_firsati','goster_one_cikan','goster_cok_satan','goster_indirimli');
         //dizinin değerlerini request only ile aldık güncelleme ve ekleme işlemii için
         $kategoriler=request('kategoriler');
         if($id > 0) {

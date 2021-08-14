@@ -2,11 +2,13 @@
 
 namespace App\Providers;
 
+use App\Models\Ayar;
 use App\Models\Kategori;
 use App\Models\Kullanici;
 use App\Models\Siparis;
 use App\Models\Urun;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -58,5 +60,11 @@ class AppServiceProvider extends ServiceProvider
             });
             $view->with('istatistikler',$istatistikler);
         });
+
+        foreach(Ayar::all()  as $ayar){
+          Config::set('ayar.' . $ayar->anahtar,$ayar->deger);
+
+        }
+
     }
 }
