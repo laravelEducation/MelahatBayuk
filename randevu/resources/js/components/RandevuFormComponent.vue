@@ -1,6 +1,8 @@
 <template>
-
+    <div>
+    <div v-if="completeForm">
 <div class="container">
+
     <div class="row">
         <div class="col-md-12">
             <ul>
@@ -13,7 +15,7 @@
     <div class="row">
         <div class="col-md-12">
          <div class="form-group">
-       <input type="text" class="form-control" v-model="name" placeholder="Ad Soyad">
+       <input type="text" class="form-control" style="margin:5px;" v-model="name" placeholder="Ad Soyad">
              <!----dosyayı vue bağlamak için v-model kullandık--->
          </div>
         </div>
@@ -21,12 +23,12 @@
             <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <input type="text" class="form-control" v-model="email" placeholder="Email">
+                    <input type="text" class="form-control" style="margin:5px;" v-model="email" placeholder="Email">
                 </div>
             </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <input type="text" class="form-control" v-mask="'##-###-###-##-##'" v-model="phone" placeholder="Telefon">
+                        <input type="text" class="form-control" style="margin:5px;" v-mask="'##-###-###-##-##'" v-model="phone" placeholder="Telefon">
                     </div>
                 </div>
             </div>
@@ -35,7 +37,7 @@
     <div class="row">
     <div class="col-md-12">
         <div class="form-group">
-            <input  class="form-control" @change="selectDate" v-model="date" type="date">
+            <input  class="form-control" :min="minDate" @change="selectDate" style="margin:5px;" v-model="date" type="date">
         </div>
         </div>
     </div>
@@ -44,7 +46,7 @@
 
             <ul class="select-time-ul">
             <li v-for="item in workingHours " class="select-time">
-                <input type="radio" v-model="workingHour" v-bind:value="item.id">
+                <input v-if="item.isActive" type="radio" v-model="workingHour" v-bind:value="item.id">
                 <!--v-bind bir öğenin sınıf listesini ve onun satır içi stillerini değiştirmektir.---->
          <span>{{item.hours}}</span>
             </li>
@@ -87,11 +89,21 @@
     </div>
     </div>
 </div>
+    </div>
+        <div  v-if="!completeForm">
+            <div class="complete-form">
+                <img  src="https://sezgidisklinigi.com/wp-content/uploads/2019/10/emblemok_103757.png" width="50px;" height="50px;">
+                <span style="color:green; font-size:20px;"> Randevunuz Başarıyla Alınmıştır</span>
+            </div>
+        </div>
+    </div>
 </template>
 <script>
   export default {
       data(){
           return {
+              completeForm:true,
+              //completeForm rue ise form görünecek false ise görünmeyecek
               errors:[],
               notification_type:null,
               workingHour:0,
@@ -99,6 +111,7 @@
               email:null,
               phone:null,
               text:null,
+              minDate:new Date().toISOString().slice(0,10),
               date:new Date().toISOString().slice(0,10),
               workingHours:[]
 
@@ -126,7 +139,10 @@
                    workingHour:this.workingHour,
                    notification_type:this.notification_type,
                }).then((res)=>{
-                   console.log(res);
+                 if(res.status){
+                     //response un statusu true geldiğinde compf. false olacak
+                     this.completeForm=false;
+                 }
                })
               // Axios, client side uygulamalarda HTTP çağrılarının kolayca yapılmasını sağlayan bir javascript kütüphanesidir.
           }
