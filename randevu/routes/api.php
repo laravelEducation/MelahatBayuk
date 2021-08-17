@@ -17,3 +17,8 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/working-hours/{date?}','App\Http\Controllers\api\indexController@getWorkingHours');
+Route::post('/appointment-store','App\Http\Controllers\api\indexController@appointmentStore');
+
+

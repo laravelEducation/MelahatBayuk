@@ -25,6 +25,7 @@
         "vue-template-compiler": "^2.6.12"
     },
     "dependencies": {
-        "cross-env": "^7.0.3"
+        "cross-env": "^7.0.3",
+        "v-mask": "^2.2.4"
     }
 }

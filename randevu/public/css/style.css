@@ -10,3 +10,12 @@ ul,li{
     margin-bottom: 5px;
     box-shadow: 1px 1px 1px 1px rgba(0,0,0,0.2);
 }
+li.errors{
+    background: white;
+    padding: 5px;
+    display: block;
+    color: red;
+    border: 1px solid red;
+    margin-bottom: 5px;
+    border-radius: 4px;
+}
