@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -15,6 +16,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/','App\Http\Controllers\front\indexController@index');
+Route::group(['prefix'=>'cron'],function (){
+   Route:: get('/reminder',function (){
+ Artisan::call('Reminder:Start');
+
+   });
+});
+
 
 Auth::routes();
 

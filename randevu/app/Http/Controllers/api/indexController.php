@@ -17,7 +17,7 @@ class indexController extends Controller
       $hours=WorkingHours::all();
       foreach ($hours as $k => $v){
         $control=Appointment::where('date',$date)
-            ->where('workingHour',$v['id'])->count();
+            ->where('workingHour',$v['id'])->where('isActive',1)->count();
         $v['isActive']=($control==0) ? true : false;
         $returnArray[]=$v;
       }
