@@ -5,7 +5,9 @@
             <input type="text" class="form-control" v-model="time" placeholder="Çalışma Saati: 10.00-11.00">
              <button @click="addTime" style="margin-top:5px;" class="btn btn-primary">Ekle</button>
         </div>
-        <div class="panel-body">Panel Heading</div>
+        <div class="panel-body">
+            <div v-for="item in data">{{item}}</div>
+        </div>
     </div>
 
 
@@ -13,7 +15,7 @@
 
 <script>
 export default {
-         props:['title'],//props olarak başlığı tanımlamazsak veri gelmez
+         props:['title','data','day'],//props olarak başlığı tanımlamazsak veri gelmez
         data(){
              return{
                  isShow:false,
@@ -25,7 +27,9 @@ export default {
             this.isShow=!this.isShow;
         },
         addTime:function (){
-
+           this.$emit('add',{text:this.time,day:this.day})
+            this.time='';
+           this.isShow=false; //ekleme işleminden sonra tekrar butonun kaoanması için
         }
     }
 

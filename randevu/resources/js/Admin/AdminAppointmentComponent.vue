@@ -39,7 +39,7 @@ console.log('beni çağırdın...')
           axios.get('http://127.0.0.1:8000/api/admin/list/?page=${page}').then((res)=>{
            this.items=res.data; //verileri çekiyoruz
           });
-          // Axios, client side uygulamalarda HTTP çağrılarının kolayca yapılmasını sağlayan bir javascript kütüphanesidir.
+          // Axios, client side uygulaalarda HTTP çağrılarının kolayca yapılmasını sağlayan bir javascript kütüphanesidir.
 
       }
 

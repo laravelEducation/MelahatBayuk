@@ -45,4 +45,19 @@ class indexController extends Controller
         }
         return response()->json($returnArray);
     }
+
+    public function getWorkingStore(Request $request){
+         $all=$request->except('_token');
+         WorkingHours::query()->delete(); //veritabanına verileri göndermeden önce silme işlemi yaıyoruz
+         foreach ($all as $k=>$v){ //k key v value
+             foreach ($v as $key=>$value){
+                 WorkingHours::create([
+                     'day'=>$k,
+                     'hours'=>$value,
+                 ]);
+             }
+         }
+
+         return response()->json($all);
+    }
 }

@@ -1946,7 +1946,7 @@ __webpack_require__.r(__webpack_exports__);
 
       axios.get('http://127.0.0.1:8000/api/admin/list/?page=${page}').then(function (res) {
         _this.items = res.data; //verileri çekiyoruz
-      }); // Axios, client side uygulamalarda HTTP çağrılarının kolayca yapılmasını sağlayan bir javascript kütüphanesidir.
+      }); // Axios, client side uygulaalarda HTTP çağrılarının kolayca yapılmasını sağlayan bir javascript kütüphanesidir.
     }
   }
 });
@@ -2395,6 +2395,24 @@ __webpack_require__.r(__webpack_exports__);
       saturday: [],
       sunday: []
     };
+  },
+  methods: {
+    add: function add(data) {
+      this[data.day].push(data.text); //butondaki ekleme işlemi kodları
+    },
+    store: function store() {
+      axios.post('http://127.0.0.1:8000/api/working-store', {
+        monday: this.monday,
+        tuesday: this.tuesday,
+        wednesday: this.wednesday,
+        thursday: this.thursday,
+        friday: this.friday,
+        saturday: this.saturday,
+        sunday: this.sunday
+      }) // Axios, client side uygulaalarda HTTP çağrılarının kolayca yapılmasını sağlayan bir javascript kütüphanesidir.
+      .then(function (res) {//dataları gönderme işlemi
+      });
+    }
   }
 });
 
@@ -2424,8 +2442,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['title'],
+  props: ['title', 'data', 'day'],
   //props olarak başlığı tanımlamazsak veri gelmez
   data: function data() {
     return {
@@ -2437,7 +2457,14 @@ __webpack_require__.r(__webpack_exports__);
     showForm: function showForm() {
       this.isShow = !this.isShow;
     },
-    addTime: function addTime() {}
+    addTime: function addTime() {
+      this.$emit('add', {
+        text: this.time,
+        day: this.day
+      });
+      this.time = '';
+      this.isShow = false; //ekleme işleminden sonra tekrar butonun kaoanması için
+    }
   }
 });
 
@@ -46623,32 +46650,45 @@ var render = function() {
         { staticClass: "col-md-12" },
         [
           _c("admin-working-item", {
-            attrs: { title: "Pazartesi", data: _vm.monday }
+            attrs: { day: "monday", title: "Pazartesi", data: _vm.monday },
+            on: { add: _vm.add }
           }),
           _vm._v(" "),
           _c("admin-working-item", {
-            attrs: { title: "Salı", data: _vm.tuesday }
+            attrs: { day: "tuesday", title: "Salı", data: _vm.tuesday },
+            on: { add: _vm.add }
           }),
           _vm._v(" "),
           _c("admin-working-item", {
-            attrs: { title: "Çarşamba", data: _vm.wednesday }
+            attrs: { day: "wednesday", title: "Çarşamba", data: _vm.wednesday },
+            on: { add: _vm.add }
           }),
           _vm._v(" "),
           _c("admin-working-item", {
-            attrs: { title: "Perşembe", data: _vm.thursday }
+            attrs: { day: "thursday", title: "Perşembe", data: _vm.thursday },
+            on: { add: _vm.add }
           }),
           _vm._v(" "),
           _c("admin-working-item", {
-            attrs: { title: "Cuma", data: _vm.friday }
+            attrs: { day: "friday", title: "Cuma", data: _vm.friday },
+            on: { add: _vm.add }
           }),
           _vm._v(" "),
           _c("admin-working-item", {
-            attrs: { title: "Cumartesi", data: _vm.saturday }
+            attrs: { day: "saturday", title: "Cumartesi", data: _vm.saturday },
+            on: { add: _vm.add }
           }),
           _vm._v(" "),
           _c("admin-working-item", {
-            attrs: { title: "Pazar", data: _vm.sunday }
-          })
+            attrs: { day: "sunday", title: "Pazar", data: _vm.sunday },
+            on: { add: _vm.add }
+          }),
+          _vm._v(" "),
+          _c(
+            "button",
+            { staticClass: "btn btn-success", on: { click: _vm.store } },
+            [_vm._v("Kaydet")]
+          )
         ],
         1
       )
@@ -46724,7 +46764,14 @@ var render = function() {
         ])
       : _vm._e(),
     _vm._v(" "),
-    _c("div", { staticClass: "panel-body" }, [_vm._v("Panel Heading")])
+    _c(
+      "div",
+      { staticClass: "panel-body" },
+      _vm._l(_vm.data, function(item) {
+        return _c("div", [_vm._v(_vm._s(item))])
+      }),
+      0
+    )
   ])
 }
 var staticRenderFns = []

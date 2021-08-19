@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class WorkingHours extends Model
 {
+    protected $guarded=[];
     //saatleri kontrol etme ve veri çekme
   static function getString($workingHourId){ //saati id olarak çekme işlemi
       $c=WorkingHours::where('id',$workingHourId)->count(); //kontrol yapıyoruz workinghour bvar mı diye kontrol eidoyurz

@@ -20,6 +20,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::group(['namespace'=>'App\Http\Controllers\api'],function (){
 Route::get('/working-hours/{date?}','indexController@getWorkingHours');
 Route::post('/appointment-store','indexController@appointmentStore');
+    Route::post('/working-store','indexController@getWorkingStore');
 
 
 Route::group(['namespace'=>'admin','prefix'=>'admin'],function (){
