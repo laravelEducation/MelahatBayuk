@@ -2396,6 +2396,19 @@ __webpack_require__.r(__webpack_exports__);
       sunday: []
     };
   },
+  created: function created() {
+    var _this = this;
+
+    axios.get('http://127.0.0.1:8000/api/working-list').then(function (res) {
+      _this.monday = typeof res.data.monday !== 'undefined' ? res.data.monday : [];
+      _this.tuesday = typeof res.data.tuesday !== 'undefined' ? res.data.tuesday : [];
+      _this.wednesday = typeof res.data.wednesday !== 'undefined' ? res.data.wednesday : [];
+      _this.thursday = typeof res.data.thursday !== 'undefined' ? res.data.thursday : [];
+      _this.friday = typeof res.data.friday !== 'undefined' ? res.data.friday : [];
+      _this.saturday = typeof res.data.saturday !== 'undefined' ? res.data.saturday : [];
+      _this.sunday = typeof res.data.sunday !== 'undefined' ? res.data.sunday : [];
+    });
+  },
   methods: {
     add: function add(data) {
       this[data.day].push(data.text); //butondaki ekleme işlemi kodları

@@ -60,4 +60,12 @@ class indexController extends Controller
 
          return response()->json($all);
     }
+    public function getWorkingList(){
+        $returnArray=[];
+        $data=WorkingHours::all();
+        foreach ($data as $k=>$v){
+              $returnArray[$v['day']][]=$v['hours']; //bu döngüye koymamızın amacı aynı gün içinde birden fazla saat seçmek
+        }
+        return response()->json($returnArray);
+    }
 }
