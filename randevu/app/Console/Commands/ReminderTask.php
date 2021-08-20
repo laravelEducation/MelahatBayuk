@@ -8,6 +8,7 @@ use Illuminate\Console\Command;
 use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Mail;
 
+
 class ReminderTask extends Command
 {
     /**
@@ -73,5 +74,7 @@ class ReminderTask extends Command
 
        }
 
+
     }
+
 }

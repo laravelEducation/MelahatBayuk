@@ -2,7 +2,11 @@
     <div>
     <div v-if="completeForm">
 <div class="container">
+    <div class="main">
+        <h2>Randevu Takip Sistemi</h2>
+        <h3>Randevu Oluşturmak İçin Bilgileri Doğru Giriniz</h3>
 
+    </div>
     <div class="row">
         <div class="col-md-12">
             <ul>
@@ -13,26 +17,23 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-4">
          <div class="form-group">
        <input type="text" class="form-control" style="margin:5px;" v-model="name" placeholder="Ad Soyad">
              <!----dosyayı vue bağlamak için v-model kullandık--->
          </div>
         </div>
-        <div class="col-md-12">
-            <div class="row">
-            <div class="col-md-6">
+
+            <div class="col-md-4">
                 <div class="form-group">
                     <input type="text" class="form-control" style="margin:5px;" v-model="email" placeholder="Email">
                 </div>
             </div>
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="form-group">
                         <input type="text" class="form-control" style="margin:5px;" v-mask="'##-###-###-##-##'" v-model="phone" placeholder="Telefon">
                     </div>
                 </div>
-            </div>
-        </div>
         </div>
     <div class="row">
     <div class="col-md-12">
@@ -56,7 +57,7 @@
     <div class="row">
       <div class="col-md-12">
         <div class="form-group">
-            <textarea v-model="text" id="" class="form-control" cols="30" rows="10"></textarea>
+            <textarea v-model="text" id="" class="form-control" cols="30" rows="5"></textarea>
             <!---v-model Form girişi, metin alanı ve seçme öğeleri üzerinde iki yönlü
              veri bağlamaları oluşturmak için yönergeyi kullanıyoruz .-->
         </div>
@@ -64,27 +65,19 @@
   </div>
     <div class="row">
 
-        <div class="col-md-12">
-            <div class="row">
-
-                <div class="col-md-6">
+        <div class="col-md-12 notification-area">
                     <div class="form-group">
-                <label for="">Sms</label>
-                <input type="radio" v-model="notification_type" value="0">
+                        <input id="sms" type="radio" v-model="notification_type" value="0">
+                        <label for="sms">Sms</label>
             </div>
-                </div>
-                <div class="col-md-6">
                     <div class="form-group">
-                    <label for="">Email</label>
-                    <input type="radio" v-model="notification_type" value="1">
+                        <input id="email" type="radio" v-model="notification_type" value="1">
+                        <label for="email">Email</label>
                 </div>
                 </div>
-
-            </div>
         </div>
-    </div>
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-12 text-center" >
         <button v-on:click="store" class="btn btn-success"> Randevu Oluştur</button>
     </div>
     </div>
@@ -129,7 +122,7 @@
        bu ajax çağrımları “Mounted” hook metodu içerisinde yaparız.*/
       methods:{
           store:function (){
-          if(this.notification_type && this.name && this.email && this.validEmail(this.email) && this.phone && this.workingHour!=0){
+          if(this.notification_type !=null && this.name!=null && this.email!=null && this.validEmail(this.email) && this.phone!=null && this.workingHour!=0){
               //controller tamma ise kaydı oluştur
                axios.post('http://127.0.0.1:8000/api/appointment-store',{
                    fullName:this.name,

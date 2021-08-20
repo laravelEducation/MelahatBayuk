@@ -13,12 +13,21 @@ class indexController extends Controller
     public function getWorkingHours($date=''){
 
      $date=($date=='') ? date("Y-m-d") : $date; //burdan gelen date null eşitse y-m-d yi yaz değilse date yaz
+     $day=date("l",strtotime($date));//l ismin tam halini verir strtotime ile gelen saati stringi time çevirerek day ile almamızı sağlar
      $returnArray=[];
-      $hours=WorkingHours::all();
+      $hours=WorkingHours::where('day',$day)->get();
       foreach ($hours as $k => $v){
+
         $control=Appointment::where('date',$date)
-            ->where('workingHour',$v['id'])->where('isActive',1)->count();
-        $v['isActive']=($control==0) ? true : false;
+            ->where('workingHour',$v['id'])
+            ->where(function ($control){
+               $control->orWhere('isActive',APPOINTMENT_DEFAULT);
+               $control->orWhere('isActive',APPOINTMENT_SUCCESS);
+            })
+            ->count();
+        $exp=explode('-',$v['hours']);
+        $nowTime=date("H.İ"); //11.58
+        $v['isActive']=($control==0 and $exp[0]>$nowTime) ? true : false;
         $returnArray[]=$v;
       }
       return response()->json($returnArray);

@@ -2587,13 +2587,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -2626,7 +2619,7 @@ __webpack_require__.r(__webpack_exports__);
     store: function store() {
       var _this2 = this;
 
-      if (this.notification_type && this.name && this.email && this.validEmail(this.email) && this.phone && this.workingHour != 0) {
+      if (this.notification_type != null && this.name != null && this.email != null && this.validEmail(this.email) && this.phone != null && this.workingHour != 0) {
         //controller tamma ise kaydı oluştur
         axios.post('http://127.0.0.1:8000/api/appointment-store', {
           fullName: this.name,
@@ -46814,6 +46807,8 @@ var render = function() {
     _vm.completeForm
       ? _c("div", [
           _c("div", { staticClass: "container" }, [
+            _vm._m(0),
+            _vm._v(" "),
             _c("div", { staticClass: "row" }, [
               _c("div", { staticClass: "col-md-12" }, [
                 _c(
@@ -46829,7 +46824,7 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-md-12" }, [
+              _c("div", { staticClass: "col-md-4" }, [
                 _c("div", { staticClass: "form-group" }, [
                   _c("input", {
                     directives: [
@@ -46856,67 +46851,63 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "col-md-12" }, [
-                _c("div", { staticClass: "row" }, [
-                  _c("div", { staticClass: "col-md-6" }, [
-                    _c("div", { staticClass: "form-group" }, [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.email,
-                            expression: "email"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        staticStyle: { margin: "5px" },
-                        attrs: { type: "text", placeholder: "Email" },
-                        domProps: { value: _vm.email },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.email = $event.target.value
-                          }
+              _c("div", { staticClass: "col-md-4" }, [
+                _c("div", { staticClass: "form-group" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.email,
+                        expression: "email"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    staticStyle: { margin: "5px" },
+                    attrs: { type: "text", placeholder: "Email" },
+                    domProps: { value: _vm.email },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
                         }
-                      })
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-md-6" }, [
-                    _c("div", { staticClass: "form-group" }, [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "mask",
-                            rawName: "v-mask",
-                            value: "##-###-###-##-##",
-                            expression: "'##-###-###-##-##'"
-                          },
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.phone,
-                            expression: "phone"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        staticStyle: { margin: "5px" },
-                        attrs: { type: "text", placeholder: "Telefon" },
-                        domProps: { value: _vm.phone },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.phone = $event.target.value
-                          }
+                        _vm.email = $event.target.value
+                      }
+                    }
+                  })
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-4" }, [
+                _c("div", { staticClass: "form-group" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "mask",
+                        rawName: "v-mask",
+                        value: "##-###-###-##-##",
+                        expression: "'##-###-###-##-##'"
+                      },
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.phone,
+                        expression: "phone"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    staticStyle: { margin: "5px" },
+                    attrs: { type: "text", placeholder: "Telefon" },
+                    domProps: { value: _vm.phone },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
                         }
-                      })
-                    ])
-                  ])
+                        _vm.phone = $event.target.value
+                      }
+                    }
+                  })
                 ])
               ])
             ]),
@@ -47002,7 +46993,7 @@ var render = function() {
                       }
                     ],
                     staticClass: "form-control",
-                    attrs: { id: "", cols: "30", rows: "10" },
+                    attrs: { id: "", cols: "30", rows: "5" },
                     domProps: { value: _vm.text },
                     on: {
                       input: function($event) {
@@ -47018,65 +47009,55 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-md-12" }, [
-                _c("div", { staticClass: "row" }, [
-                  _c("div", { staticClass: "col-md-6" }, [
-                    _c("div", { staticClass: "form-group" }, [
-                      _c("label", { attrs: { for: "" } }, [_vm._v("Sms")]),
-                      _vm._v(" "),
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.notification_type,
-                            expression: "notification_type"
-                          }
-                        ],
-                        attrs: { type: "radio", value: "0" },
-                        domProps: {
-                          checked: _vm._q(_vm.notification_type, "0")
-                        },
-                        on: {
-                          change: function($event) {
-                            _vm.notification_type = "0"
-                          }
-                        }
-                      })
-                    ])
-                  ]),
+              _c("div", { staticClass: "col-md-12 notification-area" }, [
+                _c("div", { staticClass: "form-group" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.notification_type,
+                        expression: "notification_type"
+                      }
+                    ],
+                    attrs: { id: "sms", type: "radio", value: "0" },
+                    domProps: { checked: _vm._q(_vm.notification_type, "0") },
+                    on: {
+                      change: function($event) {
+                        _vm.notification_type = "0"
+                      }
+                    }
+                  }),
                   _vm._v(" "),
-                  _c("div", { staticClass: "col-md-6" }, [
-                    _c("div", { staticClass: "form-group" }, [
-                      _c("label", { attrs: { for: "" } }, [_vm._v("Email")]),
-                      _vm._v(" "),
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.notification_type,
-                            expression: "notification_type"
-                          }
-                        ],
-                        attrs: { type: "radio", value: "1" },
-                        domProps: {
-                          checked: _vm._q(_vm.notification_type, "1")
-                        },
-                        on: {
-                          change: function($event) {
-                            _vm.notification_type = "1"
-                          }
-                        }
-                      })
-                    ])
-                  ])
+                  _c("label", { attrs: { for: "sms" } }, [_vm._v("Sms")])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.notification_type,
+                        expression: "notification_type"
+                      }
+                    ],
+                    attrs: { id: "email", type: "radio", value: "1" },
+                    domProps: { checked: _vm._q(_vm.notification_type, "1") },
+                    on: {
+                      change: function($event) {
+                        _vm.notification_type = "1"
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("label", { attrs: { for: "email" } }, [_vm._v("Email")])
                 ])
               ])
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-md-12" }, [
+              _c("div", { staticClass: "col-md-12 text-center" }, [
                 _c(
                   "button",
                   { staticClass: "btn btn-success", on: { click: _vm.store } },
@@ -47088,10 +47069,20 @@ var render = function() {
         ])
       : _vm._e(),
     _vm._v(" "),
-    !_vm.completeForm ? _c("div", [_vm._m(0)]) : _vm._e()
+    !_vm.completeForm ? _c("div", [_vm._m(1)]) : _vm._e()
   ])
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "main" }, [
+      _c("h2", [_vm._v("Randevu Takip Sistemi")]),
+      _vm._v(" "),
+      _c("h3", [_vm._v("Randevu Oluşturmak İçin Bilgileri Doğru Giriniz")])
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
