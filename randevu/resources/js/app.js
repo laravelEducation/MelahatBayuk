@@ -33,6 +33,7 @@ Vue.component('appointment-last',require('./Admin/AdminLastAppointmentComponent'
 Vue.component('admin-appointment',require('./Admin/AdminComponent').default);
 Vue.component('admin-working',require('./Admin/AdminWorkingComponent').default);
 Vue.component('admin-working-item',require('./Admin/AdminWorkingItemComponent').default);
+Vue.component('admin-appointment-modal',require('./Admin/AdminAppointmentModal').default);
 
 
 Vue.component('appointment-form',require('./components/RandevuFormComponent').default);

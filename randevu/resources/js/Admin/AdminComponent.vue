@@ -1,20 +1,21 @@
 <template>
     <div class="container">
+
         <ul class="nav nav-tabs" id="myTab" role="tablist">
-            <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="waiting-tab" data-bs-toggle="tab" data-bs-target="#waiting" type="button" role="tab" aria-controls="home" aria-selected="true">Onay Bekleyen Randevular</button>
+            <li role="presentation">
+                <a href="#waiting" id="waiting-tab" aria-controls="home" data-bs-target="#waiting" role="tab" aria-selected="true" data-toggle="tab">Onay Bekleyen Randevular</a>
             </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Günü Gelen Randevular</button>
+            <li role="presentation">
+                <a href="#home" id="home-tab" aria-controls="home" data-bs-target="#home" role="tab" data-toggle="tab">Günü Gelen Randevular</a>
             </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Gelecek Randevular</button>
+            <li role="presentation">
+                <a href="#profile" id="profile-tab" aria-controls="home" data-bs-target="#profile" role="tab" data-toggle="tab">Gelecek Randevular</a>
             </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Geçmiş Randevular</button>
+            <li role="presentation">
+                <a href="#contact" id="contact-tab" aria-controls="home" data-bs-target="#contact" role="tab" data-toggle="tab">Geçmiş Randevular</a>
             </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="cancel-tab" data-bs-toggle="tab" data-bs-target="#cancel" type="button" role="tab" aria-controls="contact" aria-selected="false">İptal Edilen Randevular</button>
+            <li role="presentation">
+                <a href="#cancel" id="cancel-tab" aria-controls="home" data-bs-target="#cancel" role="tab" data-toggle="tab">İptal Edilen Randevularr</a>
             </li>
         </ul>
         <div class="tab-content" id="myTabContent">

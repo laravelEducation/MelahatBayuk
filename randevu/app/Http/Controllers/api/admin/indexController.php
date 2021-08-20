@@ -6,16 +6,25 @@ use App\Http\Controllers\Controller;
 use App\Models\Appointment;
 use App\Models\WorkingHours;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 
 class indexController extends Controller
 {
+
+    public function detail($id){
+        $returnArray=[];
+        $data=Appointment::where('id',$id)->get();
+        $data[0]['working']=WorkingHours::getString($data[0]['workingHour']);
+        $data[0]['notification']=($data[0]['notification_type']==NOTIFICATION_EMAIL) ? 'Email' : 'Sms';
+        $returnArray['data']=$data[0]; //tekil verilerde 0 yazıyoruz
+        return response()->json($returnArray); //api oluşturduk
+    }
 
     public function process(Request $request){
         $all=$request->except('_token');
         Appointment::where('id',$all['id'])->update(['isActive'=>$all['type']]);
         return response()->json(['status'=>true]);
     }
-
     public function all(){
         $returnArray=[];
         //Waiting

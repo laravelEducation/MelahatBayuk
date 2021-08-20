@@ -1,6 +1,7 @@
 <template>
+    <div>
              <div class="row">
-            <div v-for="item in data"  class="col-md-4">
+            <div v-for="item in data" @click="openModal(item.id)"  class="col-md-4">
                 <div class="card appointment-card">
                     <span class="appointment-number">Randevu
                         <span  class="new-appointment bg-blue" v-if="item.isActive==0">Yeni</span>
@@ -24,11 +25,19 @@
                 </div>
             </div>
              </div>
+    <admin-appointment-modal :modalId="showModalId" v-if="showModal" @close="showModal = false"></admin-appointment-modal>
+    </div>
 </template>
 
 <script>
            export default {
                       props:['data'],
+                      data(){
+                          return{
+                              showModalId:0,
+                              showModal:false //false dedik sayfaya tıklandığında pencere açılsın diye
+                          }
+                      },
            created(){
 
              },
@@ -39,8 +48,12 @@
                 },
                      appointmentCancel:function (id){
                          this.$emit('updateCancel',id)
-                     }
+                     },
+                  openModal:function (id){
 
+                         this.showModalId=id; //openmodal den geliyor eşlştirme yapıyor
+                         this.showModal=true
+                  },
             }
 
 

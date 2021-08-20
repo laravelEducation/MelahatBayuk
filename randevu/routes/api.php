@@ -28,6 +28,9 @@ Route::group(['namespace'=>'admin','prefix'=>'admin'],function (){
 
 Route::post('/process','indexController@process');
 Route::get('/all','indexController@all');
+Route::get('/detail/{id}','indexController@detail');
+
+
 
 Route::get('/list','indexController@getList');
 Route::get('/today-list','indexController@getTodayList');
