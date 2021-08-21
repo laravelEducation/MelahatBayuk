@@ -4,12 +4,30 @@ namespace App\Http\Controllers\api\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Appointment;
+use App\Models\AppointmentNote;
 use App\Models\WorkingHours;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 
 class indexController extends Controller
 {
+    public  function detailStore(Request $request){
+        $returnArray=[];
+        $all=$request->except('_token');
+        $create=AppointmentNote::create([
+          'appointmentId'=>$all['id'],
+            'text'=>$all['text'],
+
+        ]);
+        if ($create){
+            $returnArray['status']=true;
+        }
+        else{
+            $returnArray['status']=false;
+        }
+        return response()->json($returnArray);
+
+    }
 
     public function detail($id){
         $returnArray=[];
@@ -17,6 +35,7 @@ class indexController extends Controller
         $data[0]['working']=WorkingHours::getString($data[0]['workingHour']);
         $data[0]['notification']=($data[0]['notification_type']==NOTIFICATION_EMAIL) ? 'Email' : 'Sms';
         $returnArray['data']=$data[0]; //tekil verilerde 0 yazıyoruz
+        $returnArray['comment']=AppointmentNote::where('appointmentId',$id)->orderBy('id','desc')->get();
         return response()->json($returnArray); //api oluşturduk
     }
 
@@ -63,7 +82,7 @@ class indexController extends Controller
 
 //isActive değrlerine göre randevu durumunu alacak
     public function getWaitingList(){
-        $data=Appointment::where('isActive',0)->orderBy('workingHour','asc')->paginate(6);
+        $data=Appointment::where('isActive',0)->orderBy('workingHour','asc')->paginate(3,['*'],'waiting_page');
         $data->getCollection()->transform(function ($value){
             $value['working']=WorkingHours::getString($value['workingHour']);
             return $value;
@@ -71,7 +90,7 @@ class indexController extends Controller
         return response()->json($data);
     }
     public function getCancelList(){
-        $data=Appointment::where('isActive',2)->orderBy('workingHour','asc')->paginate(6);
+        $data=Appointment::where('isActive',2)->orderBy('workingHour','asc')->paginate(3,['*'],'cancel_page');
         $data->getCollection()->transform(function ($value){
             $value['working']=WorkingHours::getString($value['workingHour']);
             return $value;
@@ -80,7 +99,7 @@ class indexController extends Controller
     }
 
     public function getList(){
-        $data=Appointment::where('isActive',1)->where('date','>',date("Y-m-d"))->orderBy('workingHour','asc')->paginate(6);
+        $data=Appointment::where('isActive',1)->where('date','>',date("Y-m-d"))->orderBy('workingHour','asc')->paginate(3,['*'],'list_page');
         $data->getCollection()->transform(function ($value){
             $value['working']=WorkingHours::getString($value['workingHour']);
             return $value;
@@ -89,7 +108,7 @@ class indexController extends Controller
     }
     //randevusu onaylanan yani isactive 1 olanları gödter
     public function getLastList(){
-        $data=Appointment::where('isActive',1)->where('date','<',date("Y-m-d"))->orderBy('workingHour','asc')->paginate(6);
+        $data=Appointment::where('isActive',1)->where('date','<',date("Y-m-d"))->orderBy('workingHour','asc')->paginate(3,['*'],'last_page');
         $data->getCollection()->transform(function ($value){
             $value['working']=WorkingHours::getString($value['workingHour']);
             return $value;
@@ -97,7 +116,7 @@ class indexController extends Controller
         return response()->json($data);
     }
     public function getTodayList(){
-        $data=Appointment::where('date',date("Y-m-d"))->orderBy('workingHour','asc')->paginate(6);
+        $data=Appointment::where('date',date("Y-m-d"))->orderBy('workingHour','asc')->paginate(3,['*'],'today_list');
         $data->getCollection()->transform(function ($value){
             $value['working']=WorkingHours::getString($value['workingHour']);
             return $value;

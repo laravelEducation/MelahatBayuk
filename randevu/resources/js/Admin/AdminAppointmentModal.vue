@@ -36,13 +36,21 @@
                                 <span>Not</span>: <span>{{ data.text }}</span>
                             </div>
 
-
                         </slot>
+
+                        <div style="border-top: 1px solid #ddd; padding: 10px 0px;">
+                            <div v-for="item in comment">{{item.text}}</div>
+
+                        </div>
                     </div>
 
                     <div class="modal-footer">
                         <slot name="footer">
 
+                           <div>
+                               <textarea v-model="text" class="form-control" id="" cols="30" rows="5"></textarea>
+                              <button @click="store" style="margin-top: 2px;" class="btn btn-primary">Gönder </button>
+                           </div>
                         </slot>
                     </div>
                 </div>
@@ -55,14 +63,33 @@ export default {   //id veritabanından çekme işlemi
     props: ['modalId'],
     data() {
         return {
-            data: []
+            data:[],
+            comment:[],
+            text:'',
         }
     },
     created() {
-        axios.get('http://127.0.0.1:8000/api/admin/detail/${this.modalId}')
-            .then((res) => {
-                this.data = res.data.data;
-            });
+          this.getData();
+    },
+    methods:{
+        store:function (){
+            axios.post(`http://127.0.0.1:8000/api/admin/detail`,{
+                id:this.modalId,
+                text:this.text
+            }).then((res)=>{
+                 if(res.status){
+                     this.text='';
+                     this.getData();
+                 }
+            })
+        },
+        getData:function(){
+            axios.get(`http://127.0.0.1:8000/api/admin/detail/${this.modalId}`)
+                .then((res) => {
+                    this.data = res.data.data;
+                    this.comment=res.data.comment;
+                });
+        }
     }
 }
 </script>

@@ -24,7 +24,7 @@
 
                 <div class="row" style="margin-top:10px; ">
                     <div class="col-md-12">
-                        <pagination :data="waiting" @pagination-change-page="getData"></pagination>
+                        <pagination :data="waiting" @pagination-change-page="waitingData"></pagination>
                     </div>
                 </div>
 
@@ -34,7 +34,7 @@
 
                 <div class="row" style="margin-top:10px; ">
                     <div class="col-md-12">
-                        <pagination :data="today" @pagination-change-page="getData"></pagination>
+                        <pagination :data="today" @pagination-change-page="todayData"></pagination>
                     </div>
                 </div>
             </div>
@@ -43,7 +43,7 @@
 
                 <div class="row" style="margin-top:10px; ">
                     <div class="col-md-12">
-                        <pagination :data="list" @pagination-change-page="getData"></pagination>
+                        <pagination :data="list" @pagination-change-page="listData"></pagination>
                     </div>
                 </div>
             </div>
@@ -52,7 +52,7 @@
 
                 <div class="row" style="margin-top:10px; ">
                     <div class="col-md-12">
-                        <pagination :data="last" @pagination-change-page="getData"></pagination>
+                        <pagination :data="last" @pagination-change-page="lastData"></pagination>
                     </div>
                 </div>
 
@@ -62,7 +62,7 @@
 
                 <div class="row" style="margin-top:10px; ">
                     <div class="col-md-12">
-                        <pagination :data="cancel" @pagination-change-page="getData"></pagination>
+                        <pagination :data="cancel" @pagination-change-page="cancelData"></pagination>
                     </div>
                 </div>
 
@@ -121,11 +121,9 @@ export default {
                   this.getData(); //datayı çağırma işlemi
                  })
          },
-         getData(page){
-             if (typeof  page=='undefined'){
-                 page=1;
-             }
-             axios.get('http://127.0.0.1:8000/api/admin/all/?page=${page}').then((res)=>{
+         getData(url=`http://127.0.0.1:8000/api/admin/all`){
+
+             axios.get(url).then((res)=>{
                  console.log(res);
                  this.waiting=res.data.waiting; //verileri çekiyoruz
                  this.list=res.data.list;
@@ -135,7 +133,29 @@ export default {
              });
              // Axios, client side uygulamalarda HTTP çağrılarının kolayca yapılmasını sağlayan bir javascript kütüphanesidir.
 
-         }
+         },
+         waitingData(page){
+             this.getData(`http://127.0.0.1:8000/api/admin/all?waiting_page=${page}`);
+
+         },
+         listData(page){
+             this.getData(`http://127.0.0.1:8000/api/admin/all?list_page=${page}`);
+
+         },
+         todayData(page){
+             this.getData(`http://127.0.0.1:8000/api/admin/all?today_page=${page}`);
+
+         },
+         lastData(page){
+             this.getData(`http://127.0.0.1:8000/api/admin/all?last_page=${page}`);
+
+         },
+         cancelData(page){
+             this.getData(`http://127.0.0.1:8000/api/admin/all?cancel_page=${page}`);
+
+         },
+
+
      }
 
 }

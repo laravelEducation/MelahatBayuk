@@ -15,13 +15,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/','App\Http\Controllers\front\indexController@index');
 Route::group(['prefix'=>'cron'],function (){
-   Route:: get('/reminder',function (){
- Artisan::call('Reminder:Start');
+    Route:: get('/reminder',function (){
+        Artisan::call('Reminder:Start');
 
-   });
+    });
 });
+
+Route::get('/','App\Http\Controllers\front\indexController@index');
+Route::get('/detail','App\Http\Controllers\front\indexController@detail')->name('detail');
 
 
 Auth::routes();

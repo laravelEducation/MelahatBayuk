@@ -10,7 +10,6 @@
     <link href="https://fonts.googleapis.com/css?family=Quicksand:400,500,700&display=swap" rel="stylesheet">
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
 </head>
@@ -25,7 +24,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#"> Randevu Takip <span class="version">vBeta</span>
+                    <a class="navbar-brand" href="/"> Randevu Takip <span class="version">vBeta</span>
                     </a>
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
@@ -46,6 +45,10 @@
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                 @csrf
                             </form>
+                        @else
+                        <li>
+                            <a href="{{route('detail')}}">Randevu Takip</a>
+                        </li>
                         @endauth
                     </ul>
                 </div><!--/.nav-collapse -->

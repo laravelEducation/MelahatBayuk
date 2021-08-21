@@ -2016,20 +2016,50 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   //id veritabanından çekme işlemi
   props: ['modalId'],
   data: function data() {
     return {
-      data: []
+      data: [],
+      comment: [],
+      text: ''
     };
   },
   created: function created() {
-    var _this = this;
+    this.getData();
+  },
+  methods: {
+    store: function store() {
+      var _this = this;
 
-    axios.get('http://127.0.0.1:8000/api/admin/detail/${this.modalId}').then(function (res) {
-      _this.data = res.data.data;
-    });
+      axios.post("http://127.0.0.1:8000/api/admin/detail", {
+        id: this.modalId,
+        text: this.text
+      }).then(function (res) {
+        if (res.status) {
+          _this.text = '';
+
+          _this.getData();
+        }
+      });
+    },
+    getData: function getData() {
+      var _this2 = this;
+
+      axios.get("http://127.0.0.1:8000/api/admin/detail/".concat(this.modalId)).then(function (res) {
+        _this2.data = res.data.data;
+        _this2.comment = res.data.comment;
+      });
+    }
   }
 });
 
@@ -2232,14 +2262,11 @@ var socket = (0,socket_io_client__WEBPACK_IMPORTED_MODULE_0__.default)('http://l
 
       });
     },
-    getData: function getData(page) {
+    getData: function getData() {
       var _this3 = this;
 
-      if (typeof page == 'undefined') {
-        page = 1;
-      }
-
-      axios.get('http://127.0.0.1:8000/api/admin/all/?page=${page}').then(function (res) {
+      var url = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "http://127.0.0.1:8000/api/admin/all";
+      axios.get(url).then(function (res) {
         console.log(res);
         _this3.waiting = res.data.waiting; //verileri çekiyoruz
 
@@ -2248,6 +2275,21 @@ var socket = (0,socket_io_client__WEBPACK_IMPORTED_MODULE_0__.default)('http://l
         _this3.last = res.data.last_list;
         _this3.cancel = res.data.cancel;
       }); // Axios, client side uygulamalarda HTTP çağrılarının kolayca yapılmasını sağlayan bir javascript kütüphanesidir.
+    },
+    waitingData: function waitingData(page) {
+      this.getData("http://127.0.0.1:8000/api/admin/all?waiting_page=".concat(page));
+    },
+    listData: function listData(page) {
+      this.getData("http://127.0.0.1:8000/api/admin/all?list_page=".concat(page));
+    },
+    todayData: function todayData(page) {
+      this.getData("http://127.0.0.1:8000/api/admin/all?today_page=".concat(page));
+    },
+    lastData: function lastData(page) {
+      this.getData("http://127.0.0.1:8000/api/admin/all?last_page=".concat(page));
+    },
+    cancelData: function cancelData(page) {
+      this.getData("http://127.0.0.1:8000/api/admin/all?cancel_page=".concat(page));
     }
   }
 });
@@ -2581,6 +2623,121 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/RandevuDetailComponent.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/RandevuDetailComponent.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      errors: [],
+      code: null,
+      completeForm: false,
+      info: [],
+      note: []
+    };
+  },
+  methods: {
+    store: function store() {
+      var _this = this;
+
+      if (this.code != null) {
+        axios.post("http://127.0.0.1:8000/api/appointment-detail", {
+          errors: [],
+          code: this.code
+        }).then(function (res) {
+          if (res.data.status) {
+            _this.code = '', _this.info = res.data.info;
+            _this.note = res.data.note;
+            _this.completeForm = true;
+          } else {
+            _this.errors = [];
+
+            _this.errors.push(res.data.message);
+          }
+        })["catch"](function (e) {
+          console.log(e);
+        });
+      }
+
+      this.errors = [];
+
+      if (this.code == null) {
+        this.errors.push('randevu kodu boş bırakılamaz');
+      }
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/RandevuFormComponent.vue?vue&type=script&lang=js&":
 /*!***************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/RandevuFormComponent.vue?vue&type=script&lang=js& ***!
@@ -2813,6 +2970,7 @@ Vue.component('admin-working', __webpack_require__(/*! ./Admin/AdminWorkingCompo
 Vue.component('admin-working-item', __webpack_require__(/*! ./Admin/AdminWorkingItemComponent */ "./resources/js/Admin/AdminWorkingItemComponent.vue").default);
 Vue.component('admin-appointment-modal', __webpack_require__(/*! ./Admin/AdminAppointmentModal */ "./resources/js/Admin/AdminAppointmentModal.vue").default);
 Vue.component('appointment-form', __webpack_require__(/*! ./components/RandevuFormComponent */ "./resources/js/components/RandevuFormComponent.vue").default);
+Vue.component('appointment-detail', __webpack_require__(/*! ./components/RandevuDetailComponent */ "./resources/js/components/RandevuDetailComponent.vue").default);
 Vue.component('pagination', __webpack_require__(/*! laravel-vue-pagination */ "./node_modules/laravel-vue-pagination/dist/laravel-vue-pagination.common.js"));
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -43814,6 +43972,45 @@ component.options.__file = "resources/js/Admin/AdminWorkingItemComponent.vue"
 
 /***/ }),
 
+/***/ "./resources/js/components/RandevuDetailComponent.vue":
+/*!************************************************************!*\
+  !*** ./resources/js/components/RandevuDetailComponent.vue ***!
+  \************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _RandevuDetailComponent_vue_vue_type_template_id_12015fb8___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./RandevuDetailComponent.vue?vue&type=template&id=12015fb8& */ "./resources/js/components/RandevuDetailComponent.vue?vue&type=template&id=12015fb8&");
+/* harmony import */ var _RandevuDetailComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./RandevuDetailComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/RandevuDetailComponent.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__.default)(
+  _RandevuDetailComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
+  _RandevuDetailComponent_vue_vue_type_template_id_12015fb8___WEBPACK_IMPORTED_MODULE_0__.render,
+  _RandevuDetailComponent_vue_vue_type_template_id_12015fb8___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/RandevuDetailComponent.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/RandevuFormComponent.vue":
 /*!**********************************************************!*\
   !*** ./resources/js/components/RandevuFormComponent.vue ***!
@@ -44013,6 +44210,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/RandevuDetailComponent.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************!*\
+  !*** ./resources/js/components/RandevuDetailComponent.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_RandevuDetailComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./RandevuDetailComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/RandevuDetailComponent.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_RandevuDetailComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
+
+/***/ }),
+
 /***/ "./resources/js/components/RandevuFormComponent.vue?vue&type=script&lang=js&":
 /*!***********************************************************************************!*\
   !*** ./resources/js/components/RandevuFormComponent.vue?vue&type=script&lang=js& ***!
@@ -44195,6 +44408,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AdminWorkingItemComponent_vue_vue_type_template_id_41703a5a___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AdminWorkingItemComponent_vue_vue_type_template_id_41703a5a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./AdminWorkingItemComponent.vue?vue&type=template&id=41703a5a& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Admin/AdminWorkingItemComponent.vue?vue&type=template&id=41703a5a&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/RandevuDetailComponent.vue?vue&type=template&id=12015fb8&":
+/*!*******************************************************************************************!*\
+  !*** ./resources/js/components/RandevuDetailComponent.vue?vue&type=template&id=12015fb8& ***!
+  \*******************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RandevuDetailComponent_vue_vue_type_template_id_12015fb8___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RandevuDetailComponent_vue_vue_type_template_id_12015fb8___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RandevuDetailComponent_vue_vue_type_template_id_12015fb8___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./RandevuDetailComponent.vue?vue&type=template&id=12015fb8& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/RandevuDetailComponent.vue?vue&type=template&id=12015fb8&");
 
 
 /***/ }),
@@ -44404,12 +44634,69 @@ var render = function() {
                     _c("span", [_vm._v(_vm._s(_vm.data.text))])
                   ])
                 ]
-              })
+              }),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticStyle: {
+                    "border-top": "1px solid #ddd",
+                    padding: "10px 0px"
+                  }
+                },
+                _vm._l(_vm.comment, function(item) {
+                  return _c("div", [_vm._v(_vm._s(item.text))])
+                }),
+                0
+              )
             ],
             2
           ),
           _vm._v(" "),
-          _c("div", { staticClass: "modal-footer" }, [_vm._t("footer")], 2)
+          _c(
+            "div",
+            { staticClass: "modal-footer" },
+            [
+              _vm._t("footer", function() {
+                return [
+                  _c("div", [
+                    _c("textarea", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.text,
+                          expression: "text"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { id: "", cols: "30", rows: "5" },
+                      domProps: { value: _vm.text },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.text = $event.target.value
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-primary",
+                        staticStyle: { "margin-top": "2px" },
+                        on: { click: _vm.store }
+                      },
+                      [_vm._v("Gönder ")]
+                    )
+                  ])
+                ]
+              })
+            ],
+            2
+          )
         ])
       ])
     ])
@@ -44514,7 +44801,7 @@ var render = function() {
                 [
                   _c("pagination", {
                     attrs: { data: _vm.waiting },
-                    on: { "pagination-change-page": _vm.getData }
+                    on: { "pagination-change-page": _vm.waitingData }
                   })
                 ],
                 1
@@ -44547,7 +44834,7 @@ var render = function() {
                 [
                   _c("pagination", {
                     attrs: { data: _vm.today },
-                    on: { "pagination-change-page": _vm.getData }
+                    on: { "pagination-change-page": _vm.todayData }
                   })
                 ],
                 1
@@ -44584,7 +44871,7 @@ var render = function() {
                 [
                   _c("pagination", {
                     attrs: { data: _vm.list },
-                    on: { "pagination-change-page": _vm.getData }
+                    on: { "pagination-change-page": _vm.listData }
                   })
                 ],
                 1
@@ -44621,7 +44908,7 @@ var render = function() {
                 [
                   _c("pagination", {
                     attrs: { data: _vm.last },
-                    on: { "pagination-change-page": _vm.getData }
+                    on: { "pagination-change-page": _vm.lastData }
                   })
                 ],
                 1
@@ -44658,7 +44945,7 @@ var render = function() {
                 [
                   _c("pagination", {
                     attrs: { data: _vm.cancel },
-                    on: { "pagination-change-page": _vm.getData }
+                    on: { "pagination-change-page": _vm.cancelData }
                   })
                 ],
                 1
@@ -45134,6 +45421,146 @@ var render = function() {
   ])
 }
 var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/RandevuDetailComponent.vue?vue&type=template&id=12015fb8&":
+/*!**********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/RandevuDetailComponent.vue?vue&type=template&id=12015fb8& ***!
+  \**********************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("div", [
+      _c("div", { staticClass: "container" }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-md-12" }, [
+            _c(
+              "ul",
+              _vm._l(_vm.errors, function(i) {
+                return _c("li", { staticClass: "errors" }, [
+                  _vm._v(
+                    "\n                            " +
+                      _vm._s(i) +
+                      "\n                        "
+                  )
+                ])
+              }),
+              0
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-md-12" }, [
+            _c("div", { staticClass: "form-group" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.code,
+                    expression: "code"
+                  }
+                ],
+                staticClass: "form-control",
+                staticStyle: { margin: "5px" },
+                attrs: { type: "text", placeholder: "Randevu Kodu" },
+                domProps: { value: _vm.code },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.code = $event.target.value
+                  }
+                }
+              })
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-md-12 text-center" }, [
+            _c(
+              "button",
+              { staticClass: "btn btn-success", on: { click: _vm.store } },
+              [_vm._v(" Randevu Ara")]
+            )
+          ])
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _vm.completeForm
+      ? _c("div", [
+          _c("div", { staticClass: "container" }, [
+            _c(
+              "div",
+              { staticClass: "main", staticStyle: { "margin-top": "15px" } },
+              [
+                _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col-md-12" }, [
+                    _vm._v(
+                      "\n                Tarih:" +
+                        _vm._s(_vm.info.date) +
+                        "\n            "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-12" }, [
+                    _vm._v(
+                      "\n                Saat:" +
+                        _vm._s(_vm.info.hour) +
+                        "\n            "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "row" },
+                    _vm._l(_vm.note, function(item) {
+                      return _c("div", { staticClass: "col-md-12" }, [
+                        _c("span", [_vm._v(_vm._s(item.text))])
+                      ])
+                    }),
+                    0
+                  )
+                ])
+              ]
+            )
+          ])
+        ])
+      : _vm._e()
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "main" }, [
+      _c("h2", [_vm._v("Randevu Takip Sistemi")]),
+      _vm._v(" "),
+      _c("h3", [_vm._v("Randevu Görmek İçin Bilgileri Doğru Giriniz")])
+    ])
+  }
+]
 render._withStripped = true
 
 

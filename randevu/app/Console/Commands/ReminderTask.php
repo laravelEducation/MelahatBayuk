@@ -55,7 +55,8 @@ class ReminderTask extends Command
                     'name'=>$v['fullName'],
                     'email'=>$v['email'],
                     'date'=>$v['date'],
-                    'time'=>WorkingHours::getString($v['workingHour'])
+                    'time'=>WorkingHours::getString($v['workingHour']),
+                    'code'=>$v['code']
                 ];
                 try{
               Mail::send('email',$data,function ($message) use ($data){
