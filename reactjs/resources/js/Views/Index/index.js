@@ -1,7 +1,14 @@
 import React from 'react';
+import {inject,observer} from 'mobx-react';
+import Layout from "../../Components/Layout/front.layout";
 
+const Index = (props) =>{
+    props.AuthStore.getToken();
 
-const Index = () =>{
-  return  <div>Burası Index</div>
+  return  (
+      <Layout>
+          <div>Burası Index </div>
+      </Layout>
+  )
 };
-export default Index;
+export default inject("AuthStore")(observer(Index));

@@ -14,3 +14,4 @@ use Illuminate\Support\Facades\Route;
 */
 Route::view('/','index')->where('path','.+');
 Route::view('/{path}','index')->where('path','.+');
+

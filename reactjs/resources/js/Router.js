@@ -1,6 +1,6 @@
 import React from 'react';
 import {Route,Switch} from 'react-router-dom';
-
+import PrivateRoute from "./Views/PrivateRoute";
 /*Sayfalar */
 import FrontIndex from './Views/Index';
 import FrontLogin from './Views/Login';
@@ -8,7 +8,7 @@ import FrontRegister from './Views/Register';
 
 const Main=()=>(
     <Switch>
-        <Route exact path="/" component={FrontIndex} />
+        <PrivateRoute exact path="/" component={FrontIndex} />
         <Route path="/login" component={FrontLogin} />
         <Route path="/register" component={FrontRegister} />
 

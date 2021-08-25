@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 use App\Models\User;
-use Carbon\Carbon;
-use http\Env\Response;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
@@ -19,6 +18,7 @@ class AuthController extends Controller
               'name'=>$request->name,
               'email'=>$request->email,
               'password'=>md5($request->password),
+
         ]);
         $user=$user->save();
         $credentials=['email'=>$request->email,'password'=>$request->password];
@@ -86,5 +86,15 @@ class AuthController extends Controller
         }
         public function user(Request $request){
         return response()->json($request->user());
+        }
+        public function authenticate(Request $request){
+           $user=[];
+            if (Auth::check()){
+                $user=$request->user();
+            }
+            return response()->json([
+                'user'=>$user,
+                'isLoggedIn'=>Auth::check()
+            ]);
         }
 }
