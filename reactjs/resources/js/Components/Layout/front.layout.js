@@ -3,7 +3,7 @@ import axios from 'axios';
 import {inject,observer} from "mobx-react";
 import {InvalidTokenError} from "jwt-decode";
 import {useHistory} from 'react-router-dom';
-import {Navbar,Nav,NavDropdown,FormControl,Button,Form} from 'react-bootstrap'
+import {Navbar,Nav,NavDropdown,Container,FormControl,Button,Form} from 'react-bootstrap'
 const Layout=(props)=>{
         const[user,setUser]=useState({});
         const [isLoggedIn,setIsLoggedIn]=useState(false);
@@ -14,7 +14,7 @@ const Layout=(props)=>{
             const token=(props.AuthStore.appState != null) ? props.AuthStore.appState.user.access_token:null;
             axios.post(`/api/authenticate`,{},{
          headers:{
-             Authorization:'Bearer' + token
+             Authorization:'Bearer ' + token
          }
      }).then((res)=>{
          if (!res.data.isLoggedIn){
@@ -24,14 +24,14 @@ const Layout=(props)=>{
                 setISLoggedIn(res.data.isLoggedIn);
 
             }).catch(e=>{
-                history.push('login');
+             //   history.push('login');
 
             });
         },[])
     const logout =()=>{
         axios.post(`/api/logout`,{},{
             headers:{
-                Authorization:'Bearer' +  props.AuthStore.appState.user.access_token
+                Authorization:'Bearer ' +  props.AuthStore.appState.user.access_token
             }
         }).then(res=>console.log(res)).catch(e=>console.log(e));
 
