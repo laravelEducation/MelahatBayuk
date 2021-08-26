@@ -47,4 +47,6 @@ body {
     border-top-left-radius: 0;
     border-top-right-radius: 0;
 }
-
+.dropdown-menu{
+    left: -50px;
+}

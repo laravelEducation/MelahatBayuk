@@ -50,7 +50,7 @@ const Layout=(props)=>{
                             <Nav.Link href="/">Yönetim Paneli</Nav.Link>
                             <Nav.Link href="/urunler">Ürünler</Nav.Link>
                         </Nav>
-                        <Nav className>
+                        <Nav>
                             <NavDropdown title={user.name} id="basic-nav-dropdown">
                                 <NavDropdown.Item href="#action/3.1">Profil Düzenle</NavDropdown.Item>
                                 <NavDropdown.Item href="#action/3.2">Şifre Değiştir</NavDropdown.Item>
