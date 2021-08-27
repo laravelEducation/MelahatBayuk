@@ -50,3 +50,9 @@ body {
 .dropdown-menu{
     left: -50px;
 }
+.form-error{
+    color: red;
+    font-size: small;
+    font-weight: 400;
+    text-decoration: underline;
+}
