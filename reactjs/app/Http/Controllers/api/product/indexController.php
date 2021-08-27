@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductImage;
 use App\Models\ProductProperty;
+use Dflydev\DotAccessData\Data;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -20,7 +21,9 @@ class indexController extends Controller
     public function index()
     {
         $user=request()->user();
-        return response()->json(['success'=>true,'user'=>$user]);
+        $data=Product::all();
+
+        return response()->json(['success'=>true,'user'=>$user,'data'=>$data]);
     }
 
     /**
@@ -93,7 +96,18 @@ class indexController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user=request()->user();
+        $control=Product::where('id',$id)->where('userId',$user->id)->count();
+        if ($control==0){
+            return response()->json(['success'=>false,'message'=>'Ürün size ait değil']);
+        }
+        $product=Product::where('id',$id)->with('property')->first();
+        $categories=Category::where('userId',$user->id)->get();
+        return response()->json([
+            'success'=>true,
+            'categories'=>$categories,
+            'product'=>$product
+        ]);
     }
 
     /**
@@ -105,7 +119,43 @@ class indexController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user=request()->user();
+        $control=Product::where('id',$id)->where('userId',$user->id)->count();
+        if ($control==0){
+            return response()->json(['success'=>false,'message'=>'Ürün size ait değil']);
+        }
+        $all=$request->all(); //axiostan gelen tüm verilere eriştik
+        $file=(isset($all['file'])) ? json_decode($all['file'],true) : [];
+        $newFile=(isset($all['newFile'])) ? $all['newFile'] : [];
+        $properties=(isset($all['property'])) ? json_decode($all['property'],true): [];
+
+        ProductProperty::where('productId',$id)->delete();
+        foreach ($properties as $property){
+            ProductProperty::create([
+                'productId'=>$id,
+                'property'=>$property['property'],
+                'value'=>$property['value']
+            ]);
+        }
+
+        unset($all['file']);
+        unset($all['newFile']);
+        unset($all['_method']);
+        unset($all['property']);
+        $create=Product::where('id',$id)->update($all);
+        if ($create){
+
+            return response()->json([
+                'succes'=>true
+            ]);
+        }
+        else{
+            return response()->json([
+                'success'=>false,
+                'message'=>'Ürün Eklenemedi'
+            ]);
+        }
+
     }
 
     /**
@@ -116,6 +166,13 @@ class indexController extends Controller
      */
     public function destroy($id)
     {
-        //
+           $user=request()->user();
+           $control=Product::where('id',$id)->where('userId',$user->id)->count();
+           if ($control==0){
+               return response()->json(['success'=>false,'message'=>'Ürün size ait değil']);
+           }
+          ProductProperty::where('productId',$id)->delete();
+           Product::where('id',$id)->delete();
+           return response()->json(['success'=>true,'message'=>'Silindi']);
     }
 }
