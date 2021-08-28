@@ -21,7 +21,7 @@ class indexController extends Controller
     public function index()
     {
         $user=request()->user();
-        $data=Product::all();
+        $data=Product::where('userId',$user->id)->get();
 
         return response()->json(['success'=>true,'user'=>$user,'data'=>$data]);
     }
@@ -155,7 +155,6 @@ class indexController extends Controller
                 'message'=>'Ürün Eklenemedi'
             ]);
         }
-
     }
 
     /**

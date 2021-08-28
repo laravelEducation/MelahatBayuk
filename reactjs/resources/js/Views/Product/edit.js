@@ -31,7 +31,7 @@ const Edit = (props) =>{
            }
         }).catch(e=>console.log(e));
     },[])
-    const handleSubmit=(values,{resetForm})=>{
+    const handleSubmit=(values,{resetForm,setSubmitting})=>{
         const data=new FormData();
         data.append('categoryId',values.categoryId);
         data.append('name',values.name);
@@ -56,10 +56,13 @@ const Edit = (props) =>{
         axios.post(`/api/product/${product.id}`,data,config)
             .then((res)=>{
                 if(res.data.succes){
+                    setSubmitting(false);
 
                 }
                 else{
                     swal(res.data.message);
+                    setSubmitting(false);
+
                 }
             })
             .catch(e => console.log(e));

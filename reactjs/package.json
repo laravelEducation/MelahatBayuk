@@ -29,6 +29,7 @@
         "mobx": "^6.3.2",
         "mobx-react": "^7.2.0",
         "react-bootstrap": "^2.0.0-beta.5",
+        "react-bootstrap-sweetalert": "^5.2.0",
         "react-data-table-component": "^6.11.8",
         "react-router-dom": "^5.2.0",
         "react-select": "^4.3.1",

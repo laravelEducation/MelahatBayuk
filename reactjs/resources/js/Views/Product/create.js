@@ -21,7 +21,7 @@ const Create = (props) =>{
              setCategories(res.data.categories);
         }).catch(e=>console.log(e));
     },[])
-    const handleSubmit=(values,{resetForm})=>{
+    const handleSubmit=(values,{resetForm,SetSubmitting})=>{
           const data=new FormData();
           data.append('categoryId',values.categoryId);
           data.append('name',values.name);
@@ -48,9 +48,13 @@ const Create = (props) =>{
                if(res.data.succes){
                    resetForm({});
                    setProperty([]);
+                   setSubmitting(false);
+
                }
                else{
                      swal(res.data.message);
+                   setSubmitting(false);
+
                }
               })
               .catch(e => console.log(e));
