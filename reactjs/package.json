@@ -20,6 +20,7 @@
     },
     "dependencies": {
         "bootstrap": "^5.1.0",
+        "chart.js": "^3.5.1",
         "ckeditor4-react": "^2.0.1",
         "crypto-browserify": "^3.12.0",
         "crypto-js": "^3.1.9-1",
@@ -30,6 +31,7 @@
         "mobx-react": "^7.2.0",
         "react-bootstrap": "^2.0.0-beta.5",
         "react-bootstrap-sweetalert": "^5.2.0",
+        "react-chartjs-2": "^3.0.4",
         "react-data-table-component": "^6.11.8",
         "react-router-dom": "^5.2.0",
         "react-select": "^4.3.1",

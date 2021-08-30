@@ -29,5 +29,8 @@ Route::group([
     Route::resource('category',\App\Http\Controllers\api\category\indexController::class);
     Route::resource('profile',\App\Http\Controllers\api\profile\indexController::class);
     Route::resource('customer',\App\Http\Controllers\api\customer\indexController::class);
+    Route::group(['prefix'=>'home'],function(){
+        Route::post('/',[\App\Http\Controllers\api\home\indexController::class,'index']);
+    });
 
 });
