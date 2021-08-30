@@ -27,6 +27,7 @@ Route::group([
     Route::post('/authenticate',[\App\Http\Controllers\AuthController::class,'authenticate']);
     Route::resource('product',\App\Http\Controllers\api\product\indexController::class);
     Route::resource('category',\App\Http\Controllers\api\category\indexController::class);
+    Route::resource('profile',\App\Http\Controllers\api\profile\indexController::class);
     Route::resource('customer',\App\Http\Controllers\api\customer\indexController::class);
 
 });

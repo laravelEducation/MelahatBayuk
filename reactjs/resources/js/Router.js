@@ -17,7 +17,8 @@ import CategoryEdit from './Views/Category/edit';
 import CustomerIndex from './Views/Customer/index';
 import CustomerCreate from './Views/Customer/create';
 import CustomerEdit from './Views/Customer/edit';
-
+/* Profile */
+import ProfileIndex from './Views/Profile/index';
 const Main=()=>(
     <Switch>
         <PrivateRoute exact path="/" component={FrontIndex} />
@@ -36,6 +37,8 @@ const Main=()=>(
         <PrivateRoute exact path="/musteriler" component={CustomerIndex} />
         <PrivateRoute exact path="/musteri/ekle" component={CustomerCreate} />
         <PrivateRoute exact path="/musteri/duzenle/:id" component={CustomerEdit} />
+
+        <PrivateRoute exact path="/profil" component={ProfileIndex} />
 
     </Switch>
 );

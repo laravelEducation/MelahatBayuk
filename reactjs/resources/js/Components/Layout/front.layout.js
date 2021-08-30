@@ -55,8 +55,7 @@ const Layout=(props)=>{
                         </Nav>
                         <Nav>
                             <NavDropdown title={user.name} id="basic-nav-dropdown">
-                                <NavDropdown.Item href="#action/3.1">Profil Düzenle</NavDropdown.Item>
-                                <NavDropdown.Item href="#action/3.2">Şifre Değiştir</NavDropdown.Item>
+                                <NavDropdown.Item href="/profil">Profil Düzenle</NavDropdown.Item>
                                 <NavDropdown.Divider />
                                 <NavDropdown.Item onClick={logout}>Çıkış</NavDropdown.Item>
                             </NavDropdown>
