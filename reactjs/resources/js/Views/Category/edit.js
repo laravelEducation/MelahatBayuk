@@ -26,7 +26,7 @@ const Edit = (props) =>{
                 swal(res.data.message);
             }
         }).catch(e=>console.log(e));
-    },[])
+    },[]);
     const handleSubmit=(values,{resetForm,setSubmitting})=>{
         const data=new FormData();
         data.append('name',values.name);

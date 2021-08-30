@@ -48,6 +48,7 @@ const Layout=(props)=>{
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="mr-auto">
                             <Nav.Link href="/">Yönetim Paneli</Nav.Link>
+                            <Nav.Link href="/musteriler">Müşteri & Tedarikçi</Nav.Link>
                             <Nav.Link href="/kategoriler">Kategoriler</Nav.Link>
                             <Nav.Link href="/urunler">Ürünler</Nav.Link>
 
